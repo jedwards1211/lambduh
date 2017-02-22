@@ -1,0 +1,7 @@
+coverage
+.nyc_output
+test
+node_modules
+.eslintrc
+.flowconfig
+.travis.yml

@@ -1,0 +1,65 @@
+{
+  "name": "es5-library-skeleton",
+  "version": "0.0.0-development",
+  "description": "my personal ES5 library project skeleton",
+  "main": "lib/index.js",
+  "scripts": {
+    "lint": "eslint lib test",
+    "lint:fix": "eslint --fix lib test",
+    "lint:watch": "esw --watch lib test",
+    "flow": "flow",
+    "flow:coverage": "for file in lib/**.js test/**.js; do echo $file; flow coverage $file; done",
+    "flow:watch": "flow-watch -e js,js.flow,flowconfig --ignore lib/ --ignore node_modules/ --watch .flowconfig --watch lib/ --watch test/",
+    "test": "NODE_ENV=production BABEL_ENV=test nyc --reporter=lcov --reporter=text mocha $npm_package_config_mocha",
+    "commitmsg": "validate-commit-msg",
+    "precommit": "npm run lint && flow",
+    "prepush": "npm test",
+    "prepublish": "npm run lint && flow && npm test",
+    "open:coverage": "open coverage/lcov-report/index.html",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
+  },
+  "config": {
+    "mocha": "./test/**/*.js",
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
+  },
+  "nyc": {
+    "include": [
+      "lib/**/*.js"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jedwards1211/es5-library-skeleton.git"
+  },
+  "keywords": [
+    "es5"
+  ],
+  "author": "Andy Edwards",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jedwards1211/es5-library-skeleton/issues"
+  },
+  "homepage": "https://github.com/jedwards1211/es5-library-skeleton#readme",
+  "devDependencies": {
+    "@jedwards1211/eslint-config-es5": "^1.0.0",
+    "@jedwards1211/eslint-config-flow": "^1.0.0",
+    "chai": "^3.5.0",
+    "copy": "^0.3.0",
+    "coveralls": "^2.11.16",
+    "eslint": "^3.13.1",
+    "eslint-plugin-flowtype": "^2.30.0",
+    "eslint-watch": "^3.0.0",
+    "flow-bin": "^0.39.0",
+    "flow-watch": "^1.1.0",
+    "husky": "^0.13.1",
+    "istanbul": "^0.4.5",
+    "mocha": "^3.2.0",
+    "nyc": "^10.1.2",
+    "rimraf": "^2.5.4",
+    "semantic-release": "^6.3.6",
+    "validate-commit-msg": "^2.8.2"
+  }
+}
+

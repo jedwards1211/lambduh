@@ -1,0 +1,10 @@
+{
+  "extends": [
+    "@jedwards1211/eslint-config-es5", "@jedwards1211/eslint-config-flow"
+  ],
+  "ecmaVersion": 5,
+  "env": {
+    "es6": false,
+    "shared-node-browser": true
+  }
+}
