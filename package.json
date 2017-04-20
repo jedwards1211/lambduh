@@ -11,6 +11,7 @@
     "flow:coverage": "for file in lib/**.js test/**.js; do echo $file; flow coverage $file; done",
     "flow:watch": "flow-watch -e js,js.flow,flowconfig --ignore lib/ --ignore node_modules/ --watch .flowconfig --watch lib/ --watch test/",
     "test": "NODE_ENV=production BABEL_ENV=test nyc --reporter=lcov --reporter=text mocha $npm_package_config_mocha",
+    "test:watch": "mocha --watch $npm_package_config_mocha",
     "commitmsg": "validate-commit-msg",
     "precommit": "npm run lint && flow",
     "prepush": "npm test",
