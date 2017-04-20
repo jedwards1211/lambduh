@@ -10,9 +10,8 @@ This is my personal skeleton for creating an ES5 library npm package.  You are w
 ## Quick start
 
 ```sh
-# this PR of mine will hopefully be merged soon
-npm i -g howardroark/pollinate#keep-history
-pollinate https://github.com/jedwards1211/es5-library-skeleton.git --name <package name> --author <your name> --organization <github organization> --description <package description>
+npm i -g howardroark/pollinate
+pollinate https://github.com/jedwards1211/es5-library-skeleton.git --keep-history --name <package name> --author <your name> --organization <github organization> --description <package description>
 cd <package name>
 npm i
 ```
