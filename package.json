@@ -39,7 +39,15 @@
     "url": "https://github.com/jedwards1211/lambduh.git"
   },
   "keywords": [
-    "es5"
+    "stdio",
+    "json",
+    "io",
+    "jq",
+    "sed",
+    "eval",
+    "es6",
+    "lambda",
+    "lambda-functions"
   ],
   "author": "Andy Edwards",
   "license": "MIT",
