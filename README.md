@@ -5,7 +5,7 @@
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
-## transform `stdin` with JS function instead of using `sed`, `jq`, etc. Duh!
+## transform `stdin` with JS lambda instead of using `sed`, `jq`, etc. Duh!
 
 My reaction to `jq`: 🤔 *This is cool, but I love ES6. Isn't pure ES6 good enough?*
 
@@ -65,12 +65,12 @@ to `stdout`, except:
 
 ### Lines Mode
 
-Calls your function with an array of lines from the file.  If your function returns an array of lines, it writes them
+Calls your function with an array of lines from stdin.  If your function returns an array of lines, it writes them
 in order to `stdout`.  Otherwise, it calls `String` on it and writes that string to `stdout`.
 
 ### Text Mode
 
-Calls your function with the entire text of the file in a single string, and writes what your function returns to
+Calls your function with the entire text from stdin in a single string, and writes what your function returns to
 `stdout`.
 
 ## Comes with lodash built in

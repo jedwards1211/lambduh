@@ -1,7 +1,7 @@
 {
   "name": "lambduh",
   "version": "0.0.0-development",
-  "description": "transform stdin with ES6 lambda instead of using sed, jq, etc. Duh!",
+  "description": "transform stdin with JS lambda instead of using sed, jq, etc. Duh!",
   "main": "lib/index.js",
   "bin": {
     "duh": "lib/index.js",
