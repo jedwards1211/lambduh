@@ -17,9 +17,9 @@
     "test": "NODE_ENV=production BABEL_ENV=test nyc --reporter=lcov --reporter=text mocha $npm_package_config_mocha",
     "test:watch": "mocha --watch $npm_package_config_mocha",
     "commitmsg": "validate-commit-msg",
-    "precommit": "npm run lint && flow",
+    "precommit": "npm run lint",
     "prepush": "npm test",
-    "prepublish": "npm run lint && flow && npm test",
+    "prepublish": "npm run lint && npm test",
     "open:coverage": "open coverage/lcov-report/index.html",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
