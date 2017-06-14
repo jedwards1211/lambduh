@@ -68,6 +68,7 @@
   },
   "dependencies": {
     "babel-register": "^6.24.1",
-    "line-reader": "^0.4.0"
+    "line-reader": "^0.4.0",
+    "lodash": "^4.17.4"
   }
 }
