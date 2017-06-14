@@ -8,7 +8,7 @@
 ## The world's most obvious alternative to sed or jq!
 (for JS developers, at least)
 
-The first time I saw `jq`, I thought, *Hmm. This is cool, but I love ES6. Isn't pure ES6 good enough?*
+My reaction to `jq`: 🤔 *This is cool, but I love ES6. Isn't pure ES6 good enough?*
 
 I think it is.  No new query languages!  No new syntax to learn!  JS über Alles!
 ```
@@ -34,10 +34,10 @@ Doe, John
 
 You may have noticed above that you can apply a transformation to each line.
 This is pretty much the only magic built into the `ob` command:
-* If the first argument starts with 'l', it runs in **line mode**.
+* If the first argument starts with `l` or `L`, it runs in **line mode**.
 * Otherwise, it runs in **json mode**.
 
-**Nice!!**
+:star: :+1: **Nice!!** :punch: :sparkles:
 
 ### JSON Mode
 
