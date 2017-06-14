@@ -1,8 +1,11 @@
 {
   "name": "obvious",
   "version": "0.0.0-development",
-  "description": "the obvious alternative to jq: run a pure JS lambda on input",
+  "description": "the world's most obvious alternative to sed or jq (for JS developers, at least)",
   "main": "lib/index.js",
+  "bin": {
+    "ob": "lib/index.js"
+  },
   "scripts": {
     "lint": "eslint lib test",
     "lint:fix": "eslint --fix lib test",
@@ -61,5 +64,9 @@
     "rimraf": "^2.6.1",
     "semantic-release": "^6.3.6",
     "validate-commit-msg": "^2.11.2"
+  },
+  "dependencies": {
+    "babel-register": "^6.24.1",
+    "line-reader": "^0.4.0"
   }
 }

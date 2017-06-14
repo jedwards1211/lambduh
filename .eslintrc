@@ -5,6 +5,6 @@
   "ecmaVersion": 5,
   "env": {
     "es6": false,
-    "shared-node-browser": true
+    "node": true
   }
 }
