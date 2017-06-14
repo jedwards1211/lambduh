@@ -8,11 +8,11 @@
 ## The world's most obvious alternative to sed or jq!
 (for JS developers, at least)
 
-The first time I saw `jq`, I thought, *Hmm. I love ES6. Isn't pure ES6 good enough?*
+The first time I saw `jq`, I thought, *Hmm. This is cool, but I love ES6. Isn't pure ES6 good enough?*
 
-I think it is:
+I think it is.  No new query languages!  No new syntax to learn!
 ```
-> curl 'https://api.github.com/repos/stedolan/jq/commits?per_page=5' | ob 'json => json.map(({ commit: { message, committer: { name } } }) => ({ message, name }))'
+> curl 'https://api.github.com/repos/stedolan/jq/commits?per_page=2' | ob 'json => json.map(({ commit: { message, committer: { name } } }) => ({ message, name }))'
 [
   {
     "message": "Deal with strptime() on OS X and *BSD (fix #1415)\n\nstrptime() on OS X and *BSDs (reputedly) does not set tm_wday and\ntm_yday unless corresponding %U and %j format specifiers were used.\nThat can be... surprising when one parsed year, month, and day anyways.\nGlibc's strptime() conveniently sets tm_wday and tm_yday in those cases,\nbut OS X's does not, ignoring them completely.\n\nThis commit makes jq compute those where possible, though the day of\nweek computation may be wrong for dates before 1900-03-01 or after\n2099-12-31.",
@@ -21,24 +21,18 @@ I think it is:
   {
     "message": "Attempt to fix #1415\n\nOS X (and *BSD) strptime() does not set tm_wday nor tm_yday unless\ncorresponding format options are used.  That means we must call timegm()\nto set them.",
     "name": "Nicolas Williams"
-  },
-  {
-    "message": "Add private my_timegm()",
-    "name": "Nicolas Williams"
-  },
-  {
-    "message": "Fix HAVE_TM_TM_GMT_OFF usage",
-    "name": "Nicolas Williams"
-  },
-  {
-    "message": "Use AC_CHECK_MATH_FUNC() for all math functions",
-    "name": "Nicolas Williams"
   }
 ]
 > ob '(line, index) => index < 2 && line.split(/\s+/g).reverse().join(", ")' < names
 Edwards, Andy
 Doe, John
 ```
+
+## Modes
+
+You may have noticed above that you can apply a transformation to each line.
+This is pretty much the only magic built into the `ob` command.  If the first argument starts with 'l', it runs in
+**line mode**.  Otherwise, it runs in **json mode**.
 
 ## Comes with lodash functions built in
 ```
