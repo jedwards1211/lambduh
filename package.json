@@ -75,7 +75,6 @@
     "validate-commit-msg": "^2.11.2"
   },
   "dependencies": {
-    "line-reader": "^0.4.0",
-    "lodash": "^4.17.4"
+    "line-reader": "^0.4.0"
   }
 }

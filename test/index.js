@@ -82,15 +82,6 @@ describe('lambduh', function () {
         done
       )
     })
-    it('has access to lodash', function (done) {
-      var input = [{"hash": "892n3kjasdf82", "name": "Andy Edwards"}, {"hash": "8nkkk0238lksd", "name": "John Doe"}]
-      testCase(
-        JSON.stringify(input),
-        'json => _.map(json, c => c.hash)',
-        JSON.stringify(input.map(function (c) { return c.hash }), null, 2),
-        done
-      )
-    })
     it('errors for invalid input', function (done) {
       testCase(
         '[{"hash": "892n3kjasdf82", "name": "Andy Edwards"}, {"hash": "8nkkk0238lksd", "name": "',
