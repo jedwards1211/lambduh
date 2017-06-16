@@ -86,7 +86,7 @@ describe('lambduh', function () {
       testCase(
         '[{"hash": "892n3kjasdf82", "name": "Andy Edwards"}, {"hash": "8nkkk0238lksd", "name": "',
         'json => json.map(c => c.hash)',
-        new Error("Unexpected end of JSON input"),
+        new Error("Unexpected end of"),
         done
       )
     })
