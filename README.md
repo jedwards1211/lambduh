@@ -19,23 +19,32 @@ Just look how frigging easy stuff is:
 
 ```
 npm install --global lambduh
-
-# Print lines of file in reverse order:
+```
+##### Print lines of file in reverse order:
+```
 > duh 'lines => lines.reverse()' < somefile
+```
 
-# Swap first and last name:
+#####  Swap first and last name:
+```
 > duh 'line => line.split(/\s+/g).reverse().join(", ")' < names
 Edwards, Andy
 Doe, John
+```
 
-# Put all `lodash` functions on global scope for `duh` commands for the next few examples
+##### Put all `lodash` functions on global scope for `duh` commands for the next few examples
+```
 > cd ~ && npm install lodash
 > echo 'Object.assign(global, require("lodash"))' >> ~/.lambduh.js
+```
 
-# Shuffle lines of a file
+##### Shuffle lines of a file
+```
 > duh 'lines => shuffle(lines)' < somefile
+```
 
-# See who's been committing to `react` recently:
+##### See who's been committing to `react` recently:
+```
 > curl 'https://api.github.com/repos/facebook/react/commits?per_page=100' \
   | duh 'json => mapValues(groupBy(json, "commit.committer.name"), size)'
 {
@@ -49,8 +58,9 @@ Doe, John
   "Andrew Clark": 1,
   "Dominic Gannaway": 3
 }
-
-# Destructure and restructure JSON subdocuments
+```
+##### Destructure and restructure JSON subdocuments
+```
 > curl 'https://api.github.com/repos/stedolan/jq/commits?per_page=2' \
   | duh 'json => json.map(({ commit: { message, committer: { name } } }) => ({ message, name }))'
 [
@@ -63,6 +73,7 @@ Doe, John
     "name": "Nicolas Williams"
   }
 ]
+```
 
 ## Node version note
 
