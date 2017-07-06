@@ -5,7 +5,7 @@
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
-## Turing-complete JS commandline JSON/text transformer
+## Turing-complete JS commandline JSON/text transformer and file renamer
 
 Can't remember how `sed` works.
 Can't remember how `cut` works.
@@ -75,6 +75,21 @@ Doe, John
 ]
 ```
 
+##### Rename .jsx files in the current directory to .js:
+```
+duh mv *.jsx 'file => file.replace(/\.jsx$/g, ".js")'
+```
+
+##### Rename all .jsx files in the current subtree to .js:
+```
+find . -name *.jsx | duh mv 'file => file.replace(/\.jsx$/g, ".js")'
+```
+
+##### Flatten music stored as artist/album/filename into a single directory:
+```
+duh mv */*/* 'file => { var [artist, album, file] = file.split(/\//g); return `${artist} - ${album} - ${file}` }'
+```
+
 ## Node version note
 
 The syntax that `duh` accepts for your function depends on the version of Node you're running.  If you're running a
@@ -88,6 +103,7 @@ You can use `lambduh` or just `duh`.
 
 You may have noticed above that you can apply a transformation to each line of a plain text file.
 This is pretty much the only magic built into the `duh` command:
+* If the first argument is `mv` (rather than a function), it runs in **move mode**.
 * If the first argument of your function is `lines` (ignoring case), it runs in **lines mode**.
 * Otherwise if the first argument of your function starts with `l` or `L`, it runs in **line mode**.
 * If the first argument of your function starts with `t` or `T`, it runs in **text mode**.
@@ -116,6 +132,19 @@ in order to `stdout`.  Otherwise, it calls `String` on it and writes that string
 
 Calls your function with the entire text from stdin in a single string, and writes what your function returns to
 `stdout`.
+
+### Move Mode
+
+Move mode renames each file (or directory) in the arguments by applying your provided function
+(which must be the last argument) to each filename.  If you don't provide any files in the arguments, or one of your
+ arguments is a single dash (`-`), it will also read from stdin, treating each line as a filename.
+
+By default it will print the old and new filenames and then ask
+for confirmation before actually moving them.
+
+#### Options
+* `-y`: move the files without asking you to confirm the new names.
+* `--dry-run`: just print out the old and new file names, then exit.
 
 ## Customization
 

@@ -2,11 +2,8 @@ var spawn = require('child_process').spawn
 var expect = require('chai').expect
 var pickInputMode = require('../lib/pickInputMode')
 
-function testCase(input, fn, output, done) {
-  var child = spawn(process.argv[0], [
-    require.resolve('../lib'),
-    fn,
-  ])
+function testCase(input, args, output, done) {
+  var child = spawn(process.argv[0], [require.resolve('../lib')].concat(args))
   var outchunks = []
   var errchunks = []
   child.stdout.on('data', function (chunk) { outchunks.push(chunk) })
@@ -33,15 +30,7 @@ describe('lambduh', function () {
     testCase(
       'input',
       '2881234',
-      new Error("first argument must evaluate to a function"),
-      done
-    )
-  })
-  it("errors if it can't determine input mode", function (done) {
-    testCase(
-      'input',
-      '() => {}',
-      new Error("Can't determine input mode!"),
+      new Error("invalid function"),
       done
     )
   })
@@ -67,6 +56,9 @@ describe('lambduh', function () {
       expect(pickInputMode(' function bl_ah ( line) { return line.toUpperCase() }')).to.equal('line')
       expect(pickInputMode('function aksnd923ka_( t ) { return t.toUpperCase() }')).to.equal('text')
       expect(pickInputMode('function blaAARrgh__(j){ return j.toUpperCase() }')).to.equal('json')
+    })
+    it('works for mv', function () {
+      expect(pickInputMode('mv')).to.equal('mv')
     })
     it("returns null if it can't find first argument", function () {
       expect(pickInputMode('(')).to.equal(null)
@@ -155,6 +147,40 @@ describe('lambduh', function () {
       testCase(
         lines.join('\n') + '\n',
         'text => { throw new Error("TEST") }',
+        new Error("TEST"),
+        done
+      )
+    })
+  })
+  describe('mvMode', function () {
+    it('works for valid input', function (done) {
+      testCase(
+        'foo\nbar\nBAZ',
+        ['mv', '--dry-run', 'qux', '-', 'blah blah', 'file => file.toUpperCase()'],
+        'qux -> QUX\nblah blah -> BLAH BLAH\nfoo -> FOO\nbar -> BAR\n',
+        done
+      )
+    })
+    it('reads from STDIN when no files are given in arguments', function (done) {
+      testCase(
+        'foo\nbar\nBAZ',
+        ['mv', '--dry-run', 'file => file.toUpperCase()'],
+        'foo -> FOO\nbar -> BAR\n',
+        done
+      )
+    })
+    it("doesn't read from STDIN when file arguments are given", function (done) {
+      testCase(
+        'qux',
+        ['mv', '--dry-run', 'foo', 'bar', 'file => file.toUpperCase()'],
+        'foo -> FOO\nbar -> BAR\n',
+        done
+      )
+    })
+    it('handles errors in function', function (done) {
+      testCase(
+        'foo\nbar\nBAZ',
+        ['mv', '--dry-run', '-', 'file => { throw new Error("TEST") }'],
         new Error("TEST"),
         done
       )
