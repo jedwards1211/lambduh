@@ -12,7 +12,7 @@ function testCase(input, args, output, done) {
     expect(signal).not.to.exist
     if (output instanceof Error) {
       expect(code).not.to.equal(0)
-      expect(errchunks.join('')).to.match(new RegExp("Error: " + output.message))
+      expect(errchunks.join('')).to.match(new RegExp(output.message))
     } else {
       expect(errchunks.join('')).to.equal('')
       expect(outchunks.join('')).to.equal(output)
@@ -26,11 +26,27 @@ function testCase(input, args, output, done) {
 }
 
 describe('lambduh', function () {
-  it("errors if first argument isn't a function", function (done) {
+  it("errors if last argument isn't a function", function (done) {
     testCase(
       'input',
       '2881234',
       new Error("invalid function"),
+      done
+    )
+  })
+  it("errors if function argument is missing", function (done) {
+    testCase(
+      'input',
+      [],
+      new Error('See ' + require('../package.json').repository.url + ' for usage information.'),
+      done
+    )
+  })
+  it("errors if function argument is empty", function (done) {
+    testCase(
+      'input',
+      ['mv', ''],
+      new Error('missing function'),
       done
     )
   })
@@ -108,6 +124,24 @@ describe('lambduh', function () {
         lines.join('\n') + '\n',
         'line => { throw new Error("TEST") }',
         new Error("TEST"),
+        done
+      )
+    })
+    it('breaks when function returns false', function (done) {
+      var lines = ['a', 'b', 'c']
+      testCase(
+        lines.join('\n') + '\n',
+        '(line, index) => index < 2 ? line : false',
+        ['a', 'b'].join('\n') + '\n',
+        done
+      )
+    })
+    it("doesn't output null or undefined return values", function (done) {
+      var lines = ['a', 'b', 'c']
+      testCase(
+        lines.join('\n') + '\n',
+        '(line, index) => index === 1 ? null : line',
+        ['a', 'c'].join('\n') + '\n',
         done
       )
     })
