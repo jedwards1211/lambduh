@@ -22,12 +22,12 @@ npm install --global lambduh
 ```
 ##### Print lines of file in reverse order:
 ```
-> duh 'lines => lines.reverse()' < somefile
+> duh 'lines => lines.reverse()' somefile
 ```
 
 #####  Swap first and last name:
 ```
-> duh 'line => line.split(/\s+/g).reverse().join(", ")' < names
+> duh 'line => line.split(/\s+/g).reverse().join(", ")' names
 Edwards, Andy
 Doe, John
 ```
@@ -40,7 +40,7 @@ Doe, John
 
 ##### Shuffle lines of a file
 ```
-> duh 'lines => shuffle(lines)' < somefile
+> duh 'lines => shuffle(lines)' somefile
 ```
 
 ##### See who's been committing to `react` recently:
@@ -77,7 +77,7 @@ Doe, John
 
 ##### Rename .jsx files in the current directory to .js:
 ```
-duh mv *.jsx 'file => file.replace(/\.jsx$/g, ".js")'
+duh mv 'file => file.replace(/\.jsx$/g, ".js")' *.jsx
 ```
 
 ##### Rename all .jsx files in the current subtree to .js:
@@ -87,7 +87,7 @@ find . -name *.jsx | duh mv 'file => file.replace(/\.jsx$/g, ".js")'
 
 ##### Flatten music stored as artist/album/filename into a single directory:
 ```
-duh mv */*/* 'file => { var [artist, album, file] = file.split(/\//g); return `${artist} - ${album} - ${file}` }'
+duh mv 'file => { var [artist, album, file] = file.split(/\//g); return `${artist} - ${album} - ${file}` }' */*/*
 ```
 
 ## Node version note
@@ -113,25 +113,39 @@ This is pretty much the only magic built into the `duh` command:
 
 ### JSON Mode
 
-`JSON.parse`s `stdin`, calls your function on it, writes `JSON.stringify` to `stdout`.  Duh!
+`JSON.parse`s `stdin` or each file in the arguments, calls your function on it, writes `JSON.stringify` to `stdout`
+(or overwrites the input file with the result if you use the `-i` option).
+Duh!
 
 ### Line Mode
 
-Reads lines from `stdin` one-by-one, calls your function on each with `(text, lineNumber)`, and writes what it returns
-to `stdout`, except:
+Reads lines from `stdin` or each file in the arguments, one-by-one, calls your function on each with
+`(text, lineNumber)`, and writes what it returns to `stdout` (or overwrites the input file with the result if you use
+the `-i` option), except:
 
 * If your function returns `false`, it quits reading lines.
 * If your function returns `null` or `undefined`, it skips to the next line without printing anything.
 
+#### Options
+* `--eol=EOL`: (default: system line separator) specify line separator
+
 ### Lines Mode
 
-Calls your function with an array of lines from stdin.  If your function returns an array of lines, it writes them
-in order to `stdout`.  Otherwise, it calls `String` on it and writes that string to `stdout`.
+Calls your function with an array of lines from stdin or each file in the arguments.  If your function returns an array
+of lines, it writes them in order to `stdout` (or overwrites the input file with the result if you use the `-i` option).
+Otherwise, it calls `String` on it and outputs that string.
+
+#### Options
+* `--eol=EOL`: (default: system line separator) specify line separator
 
 ### Text Mode
 
-Calls your function with the entire text from stdin in a single string, and writes what your function returns to
-`stdout`.
+Calls your function with the entire text from stdin or each file in the arguments in a single string, and writes what
+your function returns to `stdout` (or overwrites the input file with the result if you use the `-i` option).
+
+### Options for all above modes
+* `-i`: (in place) overwrite input files with the result of the transformation
+* `--encoding=ENCODING`: (default: `utf8`) specify file encoding
 
 ### Move Mode
 
