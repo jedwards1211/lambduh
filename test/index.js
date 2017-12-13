@@ -42,11 +42,11 @@ describe('lambduh', function () {
       done
     )
   })
-  it("errors if function argument is missing", function (done) {
+  it("prints usage with no arguments", function (done) {
     testCase(
       'input',
       [],
-      new Error('missing function argument'),
+      new Error('See https://github.com/jedwards1211/lambduh.git for usage information.'),
       done
     )
   })
