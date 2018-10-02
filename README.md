@@ -75,6 +75,17 @@ Doe, John
 ]
 ```
 
+##### Make AWS CLI Output easier to use
+```
+> aws cloudformation describe-stacks --stack-name clarity-db --query 'Stacks[0].Outputs' \
+  | duh 'json => require("lodash").fromPairs(json.map(({OutputKey, OutputValue}) => [OutputKey, OutputValue]))'
+{
+  "DBInstance": "clarity",
+  "RecordSet": "db.clarity.jcore.io",
+  "SecurityGroup": "sg-31bbd643"
+}
+```
+
 ##### Rename .jsx files in the current directory to .js:
 ```
 duh mv 'file => file.replace(/\.jsx$/g, ".js")' *.jsx
